@@ -1,0 +1,4 @@
+azure.subscriptionKey=
+azure.endpoint=
+github.api.url=https://api.github.com/repos/
+github.access.token=
