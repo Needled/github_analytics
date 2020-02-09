@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     @Bean
-    public Docket docket(){
+    public Docket docket() {
 
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .enable(true)

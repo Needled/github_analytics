@@ -8,6 +8,7 @@ import com.azure.ai.textanalytics.models.TextSentimentClass;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -27,7 +28,10 @@ public class AnalyticsService {
     }
 
     public Map<TextSentimentClass, Long> getTextSentimentClassLongMap(List<String> stringComments) {
-        DocumentResultCollection<AnalyzeSentimentResult> anal =  analyticsClient.analyzeSentiment(stringComments);
-        return anal.stream().map(document -> document.getDocumentSentiment().getTextSentimentClass()).collect( Collectors.groupingBy( Function.identity(), Collectors.counting()));
+        if(stringComments == null || stringComments.isEmpty()){
+            return new HashMap<>();
+        }
+        DocumentResultCollection<AnalyzeSentimentResult> analysisSentimentResult =  analyticsClient.analyzeSentiment(stringComments);
+        return analysisSentimentResult.stream().map(document -> document.getDocumentSentiment().getTextSentimentClass()).collect( Collectors.groupingBy( Function.identity(), Collectors.counting()));
     }
 }
