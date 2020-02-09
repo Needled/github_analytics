@@ -1,5 +1,4 @@
 # github_analytics
-Coding test
 
 This web-service takes a github user name and a repository name that belongs to this user and returns an analysis of the sentiment of open issues on this repository (only first page for now).
 It interfaces with the github v3 (REST) API to retrieve the issue data and requires an Azure text analytics API connection that handles the sentiment analysis.
