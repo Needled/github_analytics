@@ -1,11 +1,9 @@
 package com.futurice.test.demo.services;
 
 import com.azure.ai.textanalytics.TextAnalyticsClient;
-import com.azure.ai.textanalytics.TextAnalyticsClientBuilder;
 import com.azure.ai.textanalytics.models.AnalyzeSentimentResult;
 import com.azure.ai.textanalytics.models.DocumentResultCollection;
 import com.azure.ai.textanalytics.models.TextSentimentClass;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,21 +15,17 @@ import java.util.stream.Collectors;
 @Service
 public class AnalyticsService {
 
-    private static TextAnalyticsClient analyticsClient;
+    private TextAnalyticsClient textAnalyticsClient;
 
-    public AnalyticsService(@Value("${azure.subscriptionKey}") String azureKey,
-                            @Value("${azure.endpoint}") String azureEndpoint) {
-        analyticsClient = new TextAnalyticsClientBuilder()
-                .subscriptionKey(azureKey)
-                .endpoint(azureEndpoint)
-                .buildClient();
+    public AnalyticsService(TextAnalyticsClient textAnalyticsClient) {
+        this.textAnalyticsClient = textAnalyticsClient;
     }
 
     public Map<TextSentimentClass, Long> getTextSentimentClassLongMap(List<String> stringComments) {
         if(stringComments == null || stringComments.isEmpty()){
             return new HashMap<>();
         }
-        DocumentResultCollection<AnalyzeSentimentResult> analysisSentimentResult =  analyticsClient.analyzeSentiment(stringComments);
+        DocumentResultCollection<AnalyzeSentimentResult> analysisSentimentResult =  textAnalyticsClient.analyzeSentiment(stringComments);
         return analysisSentimentResult.stream().map(document -> document.getDocumentSentiment().getTextSentimentClass()).collect( Collectors.groupingBy( Function.identity(), Collectors.counting()));
     }
 }

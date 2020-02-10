@@ -1,5 +1,7 @@
 package com.futurice.test.demo.controllers;
 
+import com.azure.ai.textanalytics.models.AnalyzeSentimentResult;
+import com.azure.ai.textanalytics.models.DocumentResultCollection;
 import com.azure.ai.textanalytics.models.TextSentimentClass;
 import com.futurice.test.demo.domain.Comment;
 import com.futurice.test.demo.domain.SentimentResults;
